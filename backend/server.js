@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //router
-app.use(express.static(path.join(__dirname, '/frontend/assets')));
+app.use(express.static(path.join(__dirname, '../frontend/assets')));
 
 //view handler
 app.get("/*", (req,res)=>{
@@ -18,10 +18,6 @@ app.get("/*", (req,res)=>{
 })
 
 //listen on port 9999
-app.listen('9999', 
+app.listen('9999',
 	() => {console.log('Listening on port 9999')}
 );
-
-
-
-
