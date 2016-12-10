@@ -9,8 +9,8 @@ const Sequelize = require('sequelize');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// //router
-// app.use(express.static(path.join(__dirname, '/frontend/assets')));
+//router
+app.use(express.static(path.join(__dirname, '/frontend/assets')));
 
 //view handler
 app.get("/*", (req,res)=>{
