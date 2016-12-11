@@ -26,12 +26,8 @@ app.get("/*", (req,res)=>{
 });
 
 //listen on port 9999
-app.listen('9999', 
+app.listen('9999',
 	() => {
 		console.log('Listening on port 9999')
 	}
 );
-
-
-
-
