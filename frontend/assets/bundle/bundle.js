@@ -75,8 +75,13 @@
 	
 	var _CreatePost2 = _interopRequireDefault(_CreatePost);
 	
+	var _login = __webpack_require__(239);
+	
+	var _login2 = _interopRequireDefault(_login);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	// components
 	var App = _react2.default.createClass({
 	  displayName: 'App',
 	
@@ -85,14 +90,12 @@
 	      'div',
 	      null,
 	      _react2.default.createElement(_Navbar2.default, null),
+	      _react2.default.createElement(_login2.default, null),
 	      _react2.default.createElement(_CreatePost2.default, null),
 	      this.props.children
 	    );
 	  }
 	});
-	
-	// components
-	
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRouter.Router,
@@ -36881,6 +36884,66 @@
 	});
 	
 	exports.default = CreatePost;
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _jquery = __webpack_require__(236);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	var Login = _react2.default.createClass({
+	  displayName: 'Login',
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      username: "",
+	      password: ""
+	    };
+	  },
+	  handleChange: function handleChange(input, e) {
+	    this.setState(_defineProperty({}, input, e.target.value));
+	  },
+	  submit: function submit(e) {
+	    e.preventDefault();
+	
+	    (0, _jquery.ajax)({
+	      url: "/api/user/validate/" + this.state.username + "/" + this.state.password,
+	      type: "GET",
+	      data: this.state
+	    }).then(function (data) {
+	      console.log(data);
+	    });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'form',
+	        { onSubmit: this.submit },
+	        _react2.default.createElement('input', { type: 'text', value: this.state.username, onChange: this.handleChange.bind(this, "username"), placeholder: 'username' }),
+	        _react2.default.createElement('input', { type: 'text', value: this.state.password, onChange: this.handleChange.bind(this, "password"), placeholder: 'password' }),
+	        _react2.default.createElement('input', { type: 'submit' })
+	      )
+	    );
+	  }
+	});
+	
+	exports.default = Login;
 
 /***/ }
 /******/ ]);
