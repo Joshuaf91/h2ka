@@ -6,7 +6,9 @@ const User = require("../model/User");
 //localhost:9999/api/post/*
 
 const getAllPost = (req, res)=>{
-	Post.findAll()
+	Post.findAll({
+		include: [User]
+	})
 		.then(data=>{
 			res.send(data)
 		})
