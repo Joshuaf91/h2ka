@@ -5,10 +5,11 @@ const User = require('../model/User');
 //localhost:9999/api/user/*
 
 const validateUser = (req, res) => {
+  console.log(req.query)
   User.findOne({
     where: {
-      username: req.params.user,
-      password: req.params.password
+      username: req.query.username,
+      password: req.query.password
     }
   })
   .then((data) => {

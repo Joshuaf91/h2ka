@@ -5,13 +5,15 @@ import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
 // components
 import Navbar from './components/Navbar';
 import BlogPosts from './components/BlogPosts';
-import CreatePost from './components/CreatePost'
+import CreatePost from './components/CreatePost';
+import Login from "./components/login";
 
 const App = React.createClass({
   render: function(){
     return (
       <div>
         <Navbar />
+        <Login />
         <CreatePost />
         {this.props.children}
       </div>
