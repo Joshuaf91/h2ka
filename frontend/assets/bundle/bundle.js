@@ -75,9 +75,25 @@
 	
 	var _CreatePost2 = _interopRequireDefault(_CreatePost);
 	
-	var _login = __webpack_require__(239);
+	var _Login = __webpack_require__(240);
 	
-	var _login2 = _interopRequireDefault(_login);
+	var _Login2 = _interopRequireDefault(_Login);
+	
+	var _Classes = __webpack_require__(241);
+	
+	var _Classes2 = _interopRequireDefault(_Classes);
+	
+	var _Calendar = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/Calendar\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	
+	var _Calendar2 = _interopRequireDefault(_Calendar);
+	
+	var _Gallery = __webpack_require__(243);
+	
+	var _Gallery2 = _interopRequireDefault(_Gallery);
+	
+	var _Contact = __webpack_require__(244);
+	
+	var _Contact2 = _interopRequireDefault(_Contact);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -90,7 +106,7 @@
 	      'div',
 	      null,
 	      _react2.default.createElement(_Navbar2.default, null),
-	      _react2.default.createElement(_login2.default, null),
+	      _react2.default.createElement(_Login2.default, null),
 	      _react2.default.createElement(_CreatePost2.default, null),
 	      this.props.children
 	    );
@@ -103,7 +119,14 @@
 	  _react2.default.createElement(
 	    _reactRouter.Route,
 	    { path: '/', component: App },
-	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _BlogPosts2.default })
+	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _BlogPosts2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/about', component: About }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/classes', component: _Classes2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/calendar', component: _Calendar2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/gallery', component: _Gallery2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/create-post', component: _CreatePost2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _Login2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/contact', component: _Contact2.default })
 	  )
 	), document.getElementById('root'));
 
@@ -36886,7 +36909,8 @@
 	exports.default = CreatePost;
 
 /***/ },
-/* 239 */
+/* 239 */,
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36944,6 +36968,97 @@
 	});
 	
 	exports.default = Login;
+
+/***/ },
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Classes = _react2.default.createClass({
+	  displayName: 'Classes',
+	
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      'This is the Classes Page'
+	    );
+	  }
+	});
+	
+	exports.default = Classes;
+
+/***/ },
+/* 242 */,
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Gallery = _react2.default.createClass({
+	  displayName: 'Gallery',
+	
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      'This is the Gallery Page'
+	    );
+	  }
+	});
+	
+	exports.default = Gallery;
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Contact = _react2.default.createClass({
+	  displayName: 'Contact',
+	
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      'This is the Contact Page'
+	    );
+	  }
+	});
+	
+	exports.default = Contact;
 
 /***/ }
 /******/ ]);
