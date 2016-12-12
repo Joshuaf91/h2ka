@@ -26552,7 +26552,7 @@
 	        ),
 	        _react2.default.createElement(
 	          'ul',
-	          null,
+	          { className: 'navBar' },
 	          _react2.default.createElement(
 	            'li',
 	            null,
