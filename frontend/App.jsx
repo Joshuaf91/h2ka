@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 // components
 import Navbar from './components/Navbar';
@@ -17,25 +17,34 @@ const App = React.createClass({
     return (
       <div>
         <Navbar />
-        <Login />
-        <CreatePost />
         {this.props.children}
       </div>
     )
   }
 })
 
+const signOut= function(){
+  function setCookie(cname, cvalue, exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays*24*60*60*1000));
+      var expires = "expires="+d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+  setCookie("userId", 0 , -10);
+  require('react-router').browserHistory.push('/');
+}
+
 ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={BlogPosts} />
-      <Route path="/about" component={About}></Route>
+      {/*<Route path="/about" component={About}></Route>*/}
       <Route path="/classes" component={Classes}></Route>
       <Route path="/calendar" component={Calendar}></Route>
       <Route path="/gallery" component={Gallery}></Route>
       <Route path="/create-post" component={CreatePost}></Route>
       <Route path="/login" component={Login}></Route>
-      {/* <Route path="/sign-out" onEnter={}></Route> */}
+      <Route path="/sign-out" onEnter={signOut}></Route>
       <Route path="/contact" component={Contact}></Route>
     </Route>
   </Router>,

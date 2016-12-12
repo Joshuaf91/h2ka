@@ -75,23 +75,23 @@
 	
 	var _CreatePost2 = _interopRequireDefault(_CreatePost);
 	
-	var _Login = __webpack_require__(240);
+	var _Login = __webpack_require__(239);
 	
 	var _Login2 = _interopRequireDefault(_Login);
 	
-	var _Classes = __webpack_require__(241);
+	var _Classes = __webpack_require__(240);
 	
 	var _Classes2 = _interopRequireDefault(_Classes);
 	
-	var _Calendar = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/Calendar\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _Calendar = __webpack_require__(241);
 	
 	var _Calendar2 = _interopRequireDefault(_Calendar);
 	
-	var _Gallery = __webpack_require__(243);
+	var _Gallery = __webpack_require__(242);
 	
 	var _Gallery2 = _interopRequireDefault(_Gallery);
 	
-	var _Contact = __webpack_require__(244);
+	var _Contact = __webpack_require__(243);
 	
 	var _Contact2 = _interopRequireDefault(_Contact);
 	
@@ -106,12 +106,21 @@
 	      'div',
 	      null,
 	      _react2.default.createElement(_Navbar2.default, null),
-	      _react2.default.createElement(_Login2.default, null),
-	      _react2.default.createElement(_CreatePost2.default, null),
 	      this.props.children
 	    );
 	  }
 	});
+	
+	var signOut = function signOut() {
+	  function setCookie(cname, cvalue, exdays) {
+	    var d = new Date();
+	    d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+	    var expires = "expires=" + d.toUTCString();
+	    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	  }
+	  setCookie("userId", 0, -10);
+	  __webpack_require__(179).browserHistory.push('/');
+	};
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRouter.Router,
@@ -120,12 +129,12 @@
 	    _reactRouter.Route,
 	    { path: '/', component: App },
 	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _BlogPosts2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/about', component: About }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/classes', component: _Classes2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/calendar', component: _Calendar2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/gallery', component: _Gallery2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/create-post', component: _CreatePost2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _Login2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/sign-out', onEnter: signOut }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/contact', component: _Contact2.default })
 	  )
 	), document.getElementById('root'));
@@ -26446,7 +26455,7 @@
 /* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -26456,51 +26465,105 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRouter = __webpack_require__(179);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Navbar = _react2.default.createClass({
-	  displayName: "Navbar",
+	  displayName: 'Navbar',
 	
-	  render: function render() {
-	    return _react2.default.createElement(
-	      "div",
+	  login: function login() {
+	    var trueOutput = [_react2.default.createElement(
+	      'li',
 	      null,
 	      _react2.default.createElement(
-	        "nav",
+	        _reactRouter.Link,
+	        { to: "/create-post", key: 'CreatePost' },
+	        'CreatePost'
+	      )
+	    ), _react2.default.createElement(
+	      'li',
+	      null,
+	      _react2.default.createElement(
+	        _reactRouter.Link,
+	        { to: "/sign-out", key: 'Sign Out' },
+	        'Sign Out'
+	      )
+	    )];
+	    function setCookie(cname, cvalue, exdays) {
+	      var d = new Date();
+	      d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+	      var expires = "expires=" + d.toUTCString();
+	      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	    }
+	
+	    function getCookie(cname) {
+	      var name = cname + "=";
+	      var ca = document.cookie.split(';');
+	      for (var i = 0; i < ca.length; i++) {
+	        var c = ca[i];
+	        while (c.charAt(0) == ' ') {
+	          c = c.substring(1);
+	        }
+	        if (c.indexOf(name) == 0) {
+	          return c.substring(name.length, c.length);
+	        }
+	      }
+	      return "";
+	    }
+	    var user = getCookie("userId");
+	    if (user != "") {
+	      return trueOutput;
+	    } else {
+	      return _react2.default.createElement(
+	        'li',
 	        null,
 	        _react2.default.createElement(
-	          "p",
-	          { className: "brand" },
-	          "h2ka"
+	          _reactRouter.Link,
+	          { to: 'login', key: 'login' },
+	          'Login'
+	        )
+	      );
+	    }
+	  },
+	  render: function render() {
+	    var links = ["About", "Classes", "Gallery", "Calendar", "Contact"];
+	    links = links.map(function (element, index) {
+	      return _react2.default.createElement(
+	        'li',
+	        { key: index },
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: "/" + element.toLowerCase(), key: index },
+	          element
+	        )
+	      );
+	    });
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'nav',
+	        null,
+	        _react2.default.createElement(
+	          'p',
+	          { className: 'brand' },
+	          'h2ka'
 	        ),
 	        _react2.default.createElement(
-	          "ul",
+	          'ul',
 	          null,
 	          _react2.default.createElement(
-	            "li",
+	            'li',
 	            null,
-	            "Home"
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: "/" },
+	              'Home'
+	            )
 	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            "About"
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            "Classes"
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            "Gallery"
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            "Contact"
-	          )
+	          links,
+	          this.login()
 	        )
 	      )
 	    );
@@ -36815,7 +36878,6 @@
 	  displayName: 'IndividualPost',
 	
 	  render: function render() {
-	    console.log(this.props);
 	    return _react2.default.createElement(
 	      'div',
 	      null,
@@ -36909,8 +36971,7 @@
 	exports.default = CreatePost;
 
 /***/ },
-/* 239 */,
-/* 240 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36929,6 +36990,11 @@
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
+	// why does this one not work
+	// import {Router} from 'react-router';
+	// but this one does see line 37
+	var Router = __webpack_require__(179);
+	
 	var Login = _react2.default.createClass({
 	  displayName: 'Login',
 	
@@ -36943,14 +37009,21 @@
 	  },
 	  submit: function submit(e) {
 	    e.preventDefault();
-	
 	    (0, _jquery.ajax)({
 	      url: "/api/user/validate/" + this.state.username + "/" + this.state.password,
 	      type: "GET",
 	      data: this.state
 	    }).then(function (data) {
-	      console.log(data);
+	      function setCookie(cname, cvalue, exdays) {
+	        var d = new Date();
+	        d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+	        var expires = "expires=" + d.toUTCString();
+	        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	      }
+	      setCookie("userId", data.id);
+	      Router.browserHistory.push("/");
 	    });
+	    // Router.browserHistory.push('/');
 	  },
 	  render: function render() {
 	    return _react2.default.createElement(
@@ -36970,7 +37043,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 241 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37000,8 +37073,37 @@
 	exports.default = Classes;
 
 /***/ },
-/* 242 */,
-/* 243 */
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Calendar = _react2.default.createClass({
+	  displayName: 'Calendar',
+	
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      'This is the Calendar Page'
+	    );
+	  }
+	});
+	
+	exports.default = Calendar;
+
+/***/ },
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37031,7 +37133,7 @@
 	exports.default = Gallery;
 
 /***/ },
-/* 244 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
