@@ -14,15 +14,19 @@ const Login = React.createClass ({
     })
   },
   submit: function(e){
-    e.preventDefault()
-
     ajax({
       url: "/api/user/validate/" + this.state.username + "/" + this.state.password,
       type: "GET",
       data: this.state
     })
     .then(function(data) {
-      console.log(data)
+      function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+      }
+      setCookie("userId", data.id);
     })
   },
   render: function(){

@@ -85,13 +85,61 @@
 	var App = _react2.default.createClass({
 	  displayName: 'App',
 	
+	  CreatePoster: function CreatePoster() {
+	    function setCookie(cname, cvalue, exdays) {
+	      var d = new Date();
+	      d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+	      var expires = "expires=" + d.toUTCString();
+	      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	    }
+	
+	    function getCookie(cname) {
+	      var name = cname + "=";
+	      var ca = document.cookie.split(';');
+	      for (var i = 0; i < ca.length; i++) {
+	        var c = ca[i];
+	        while (c.charAt(0) == ' ') {
+	          c = c.substring(1);
+	        }
+	        if (c.indexOf(name) == 0) {
+	          return c.substring(name.length, c.length);
+	        }
+	      }
+	      return "";
+	    }
+	    var user = getCookie("userId");
+	    if (user != "") {
+	      alert("Welcome again " + user);
+	      return true;
+	    } else {
+	      return false;
+	    }
+	  },
+	  signOut: function signOut() {
+	    function setCookie(cname, cvalue, exdays) {
+	      var d = new Date();
+	      d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+	      var expires = "expires=" + d.toUTCString();
+	      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	    }
+	    setCookie("userId", 0, -10);
+	  },
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
 	      null,
 	      _react2.default.createElement(_Navbar2.default, null),
-	      _react2.default.createElement(_login2.default, null),
-	      _react2.default.createElement(_CreatePost2.default, null),
+	      this.CreatePoster() ? _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_CreatePost2.default, null),
+	        ' ',
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this.signOut },
+	          ' signOut'
+	        )
+	      ) : _react2.default.createElement(_login2.default, null),
 	      this.props.children
 	    );
 	  }
@@ -26423,7 +26471,7 @@
 /* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -26433,51 +26481,105 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRouter = __webpack_require__(179);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Navbar = _react2.default.createClass({
-	  displayName: "Navbar",
+	  displayName: 'Navbar',
 	
-	  render: function render() {
-	    return _react2.default.createElement(
-	      "div",
+	  login: function login() {
+	    var trueOutput = [_react2.default.createElement(
+	      'li',
 	      null,
 	      _react2.default.createElement(
-	        "nav",
+	        _reactRouter.Link,
+	        { to: "/create-post" },
+	        'CreatePost'
+	      )
+	    ), _react2.default.createElement(
+	      'li',
+	      null,
+	      _react2.default.createElement(
+	        _reactRouter.Link,
+	        { to: "/sign-out" },
+	        'Sign Out'
+	      )
+	    )];
+	    function setCookie(cname, cvalue, exdays) {
+	      var d = new Date();
+	      d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+	      var expires = "expires=" + d.toUTCString();
+	      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	    }
+	
+	    function getCookie(cname) {
+	      var name = cname + "=";
+	      var ca = document.cookie.split(';');
+	      for (var i = 0; i < ca.length; i++) {
+	        var c = ca[i];
+	        while (c.charAt(0) == ' ') {
+	          c = c.substring(1);
+	        }
+	        if (c.indexOf(name) == 0) {
+	          return c.substring(name.length, c.length);
+	        }
+	      }
+	      return "";
+	    }
+	    var user = getCookie("userId");
+	    if (user != "") {
+	      return trueOutput;
+	    } else {
+	      return _react2.default.createElement(
+	        'li',
 	        null,
 	        _react2.default.createElement(
-	          "p",
-	          { className: "brand" },
-	          "h2ka"
+	          _reactRouter.Link,
+	          { to: 'login' },
+	          'Login'
+	        )
+	      );
+	    }
+	  },
+	  render: function render() {
+	    var links = ["About", "Classes", "Gallery", "Calendar", "Contact"];
+	    links = links.map(function (element, index) {
+	      return _react2.default.createElement(
+	        'li',
+	        null,
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: "/" + element.toLowerCase(), key: index },
+	          element
+	        )
+	      );
+	    });
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'nav',
+	        null,
+	        _react2.default.createElement(
+	          'p',
+	          { className: 'brand' },
+	          'h2ka'
 	        ),
 	        _react2.default.createElement(
-	          "ul",
+	          'ul',
 	          null,
 	          _react2.default.createElement(
-	            "li",
+	            'li',
 	            null,
-	            "Home"
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: "/" },
+	              'Home'
+	            )
 	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            "About"
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            "Classes"
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            "Gallery"
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            "Contact"
-	          )
+	          links,
+	          this.login()
 	        )
 	      )
 	    );
@@ -36918,14 +37020,18 @@
 	    this.setState(_defineProperty({}, input, e.target.value));
 	  },
 	  submit: function submit(e) {
-	    e.preventDefault();
-	
 	    (0, _jquery.ajax)({
 	      url: "/api/user/validate/" + this.state.username + "/" + this.state.password,
 	      type: "GET",
 	      data: this.state
 	    }).then(function (data) {
-	      console.log(data);
+	      function setCookie(cname, cvalue, exdays) {
+	        var d = new Date();
+	        d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+	        var expires = "expires=" + d.toUTCString();
+	        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	      }
+	      setCookie("userId", data.id);
 	    });
 	  },
 	  render: function render() {
