@@ -45,7 +45,7 @@ const Navbar = React.createClass({
       <div>
         <nav>
           <p className="brand">h2ka</p>
-          <ul>
+          <ul className="navBar">
             <li><Link to={"/"}>Home</Link></li>
             {links}
             {this.login()}

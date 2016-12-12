@@ -1,0 +1,19 @@
+.navBar li{
+	list-style: none;
+}
+
+.navBar a:hover{
+	color: black;
+}
+
+
+.navBar{
+	display: flex;
+	justify-content: space-around;
+}
+
+.navBar a{
+	color: blue;
+	text-decoration: none;
+	transition-duration: 500ms;
+}
