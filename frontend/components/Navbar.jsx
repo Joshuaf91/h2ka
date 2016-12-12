@@ -5,8 +5,8 @@ const Navbar = React.createClass({
   login: function(){
     var trueOutput = 
       [
-        <li><Link to={"/create-post"}>CreatePost</Link></li>,
-        <li><Link to={"/sign-out"}>Sign Out</Link></li>
+        <li><Link to={"/create-post"} key="CreatePost">CreatePost</Link></li>,
+        <li><Link to={"/sign-out"} key="Sign Out">Sign Out</Link></li>
       ]
     function setCookie(cname, cvalue, exdays) {
         var d = new Date();
@@ -33,13 +33,13 @@ const Navbar = React.createClass({
     if (user != "") {
         return(trueOutput)
     } else {
-        return (<li><Link to="login">Login</Link></li>)
+        return (<li><Link to="login" key="login">Login</Link></li>)
     }
   },
   render: function(){
     var links= ["About", "Classes", "Gallery", "Calendar", "Contact"]
     links = links.map(function(element,index){
-      return(<li><Link to={"/"+element.toLowerCase()} key={index}>{element}</Link></li>)
+      return(<li key={index}><Link to={"/"+element.toLowerCase()} key={index}>{element}</Link></li>)
       })
     return (
       <div>

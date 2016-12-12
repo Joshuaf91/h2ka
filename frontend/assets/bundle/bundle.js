@@ -75,9 +75,25 @@
 	
 	var _CreatePost2 = _interopRequireDefault(_CreatePost);
 	
-	var _login = __webpack_require__(239);
+	var _Login = __webpack_require__(239);
 	
-	var _login2 = _interopRequireDefault(_login);
+	var _Login2 = _interopRequireDefault(_Login);
+	
+	var _Classes = __webpack_require__(240);
+	
+	var _Classes2 = _interopRequireDefault(_Classes);
+	
+	var _Calendar = __webpack_require__(241);
+	
+	var _Calendar2 = _interopRequireDefault(_Calendar);
+	
+	var _Gallery = __webpack_require__(242);
+	
+	var _Gallery2 = _interopRequireDefault(_Gallery);
+	
+	var _Contact = __webpack_require__(243);
+	
+	var _Contact2 = _interopRequireDefault(_Contact);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -85,65 +101,26 @@
 	var App = _react2.default.createClass({
 	  displayName: 'App',
 	
-	  CreatePoster: function CreatePoster() {
-	    function setCookie(cname, cvalue, exdays) {
-	      var d = new Date();
-	      d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-	      var expires = "expires=" + d.toUTCString();
-	      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-	    }
-	
-	    function getCookie(cname) {
-	      var name = cname + "=";
-	      var ca = document.cookie.split(';');
-	      for (var i = 0; i < ca.length; i++) {
-	        var c = ca[i];
-	        while (c.charAt(0) == ' ') {
-	          c = c.substring(1);
-	        }
-	        if (c.indexOf(name) == 0) {
-	          return c.substring(name.length, c.length);
-	        }
-	      }
-	      return "";
-	    }
-	    var user = getCookie("userId");
-	    if (user != "") {
-	      alert("Welcome again " + user);
-	      return true;
-	    } else {
-	      return false;
-	    }
-	  },
-	  signOut: function signOut() {
-	    function setCookie(cname, cvalue, exdays) {
-	      var d = new Date();
-	      d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-	      var expires = "expires=" + d.toUTCString();
-	      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-	    }
-	    setCookie("userId", 0, -10);
-	  },
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
 	      null,
 	      _react2.default.createElement(_Navbar2.default, null),
-	      this.CreatePoster() ? _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_CreatePost2.default, null),
-	        ' ',
-	        _react2.default.createElement(
-	          'button',
-	          { onClick: this.signOut },
-	          ' signOut'
-	        )
-	      ) : _react2.default.createElement(_login2.default, null),
 	      this.props.children
 	    );
 	  }
 	});
+	
+	var signOut = function signOut() {
+	  function setCookie(cname, cvalue, exdays) {
+	    var d = new Date();
+	    d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+	    var expires = "expires=" + d.toUTCString();
+	    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	  }
+	  setCookie("userId", 0, -10);
+	  __webpack_require__(179).browserHistory.push('/');
+	};
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRouter.Router,
@@ -151,7 +128,14 @@
 	  _react2.default.createElement(
 	    _reactRouter.Route,
 	    { path: '/', component: App },
-	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _BlogPosts2.default })
+	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _BlogPosts2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/classes', component: _Classes2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/calendar', component: _Calendar2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/gallery', component: _Gallery2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/create-post', component: _CreatePost2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _Login2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/sign-out', onEnter: signOut }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/contact', component: _Contact2.default })
 	  )
 	), document.getElementById('root'));
 
@@ -26494,7 +26478,7 @@
 	      null,
 	      _react2.default.createElement(
 	        _reactRouter.Link,
-	        { to: "/create-post" },
+	        { to: "/create-post", key: 'CreatePost' },
 	        'CreatePost'
 	      )
 	    ), _react2.default.createElement(
@@ -26502,7 +26486,7 @@
 	      null,
 	      _react2.default.createElement(
 	        _reactRouter.Link,
-	        { to: "/sign-out" },
+	        { to: "/sign-out", key: 'Sign Out' },
 	        'Sign Out'
 	      )
 	    )];
@@ -26536,7 +26520,7 @@
 	        null,
 	        _react2.default.createElement(
 	          _reactRouter.Link,
-	          { to: 'login' },
+	          { to: 'login', key: 'login' },
 	          'Login'
 	        )
 	      );
@@ -26547,7 +26531,7 @@
 	    links = links.map(function (element, index) {
 	      return _react2.default.createElement(
 	        'li',
-	        null,
+	        { key: index },
 	        _react2.default.createElement(
 	          _reactRouter.Link,
 	          { to: "/" + element.toLowerCase(), key: index },
@@ -36894,7 +36878,6 @@
 	  displayName: 'IndividualPost',
 	
 	  render: function render() {
-	    console.log(this.props);
 	    return _react2.default.createElement(
 	      'div',
 	      null,
@@ -37007,6 +36990,11 @@
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
+	// why does this one not work
+	// import {Router} from 'react-router';
+	// but this one does see line 37
+	var Router = __webpack_require__(179);
+	
 	var Login = _react2.default.createClass({
 	  displayName: 'Login',
 	
@@ -37020,6 +37008,7 @@
 	    this.setState(_defineProperty({}, input, e.target.value));
 	  },
 	  submit: function submit(e) {
+	    e.preventDefault();
 	    (0, _jquery.ajax)({
 	      url: "/api/user/validate/" + this.state.username + "/" + this.state.password,
 	      type: "GET",
@@ -37032,7 +37021,9 @@
 	        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 	      }
 	      setCookie("userId", data.id);
+	      Router.browserHistory.push("/");
 	    });
+	    // Router.browserHistory.push('/');
 	  },
 	  render: function render() {
 	    return _react2.default.createElement(
@@ -37050,6 +37041,126 @@
 	});
 	
 	exports.default = Login;
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Classes = _react2.default.createClass({
+	  displayName: 'Classes',
+	
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      'This is the Classes Page'
+	    );
+	  }
+	});
+	
+	exports.default = Classes;
+
+/***/ },
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Calendar = _react2.default.createClass({
+	  displayName: 'Calendar',
+	
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      'This is the Calendar Page'
+	    );
+	  }
+	});
+	
+	exports.default = Calendar;
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Gallery = _react2.default.createClass({
+	  displayName: 'Gallery',
+	
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      'This is the Gallery Page'
+	    );
+	  }
+	});
+	
+	exports.default = Gallery;
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Contact = _react2.default.createClass({
+	  displayName: 'Contact',
+	
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      'This is the Contact Page'
+	    );
+	  }
+	});
+	
+	exports.default = Contact;
 
 /***/ }
 /******/ ]);

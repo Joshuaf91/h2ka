@@ -1,5 +1,11 @@
 import React from 'react';
 import {ajax} from 'jquery';
+// why does this one not work
+  // import {Router} from 'react-router';
+// but this one does see line 37
+var Router = require('react-router');
+
+
 
 const Login = React.createClass ({
   getInitialState: function(){
@@ -14,6 +20,7 @@ const Login = React.createClass ({
     })
   },
   submit: function(e){
+    e.preventDefault()
     ajax({
       url: "/api/user/validate/" + this.state.username + "/" + this.state.password,
       type: "GET",
@@ -27,7 +34,9 @@ const Login = React.createClass ({
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
       }
       setCookie("userId", data.id);
+      Router.browserHistory.push("/")
     })
+    // Router.browserHistory.push('/');
   },
   render: function(){
     return (
