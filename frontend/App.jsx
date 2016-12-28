@@ -1,6 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { withRouter ,Router, Route, IndexRoute, browserHistory } from 'react-router';
+
+//store
+import {Provider} from 'react-redux';
+import Store from './store/store';
+import user_actions from './actions/user-action';
 
 // components
 import Navbar from './components/Navbar';
@@ -12,31 +17,24 @@ import Calendar from "./components/Calendar";
 import Gallery from "./components/Gallery";
 import Contact from "./components/Contact";
 
-const App = React.createClass({
-  render: function(){
-    return (
-      <div>
-        <Navbar />
-        {this.props.children}
-      </div>
-    )
-  }
-})
+const App = withRouter((props)=>
+  (
+  <div>
+    <Navbar />
+    {props.children}
+  </div>
+  )
+)
 
 const signOut= function(){
-  function setCookie(cname, cvalue, exdays) {
-      var d = new Date();
-      d.setTime(d.getTime() + (exdays*24*60*60*1000));
-      var expires = "expires="+d.toUTCString();
-      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }
-  setCookie("userId", 0 , -10);
-  require('react-router').browserHistory.push('/');
+  //end session for now just setting state to false but session has not really ended.
+  Store.dispatch(signOut());
 }
 
 ReactDOM.render(
+  <Provider store={Store}>
   <Router history={browserHistory}>
-    <Route path="/" component={App}>
+    <Route path="/" component={App} onEnter={user_actions.validate()}>
       <IndexRoute component={BlogPosts} />
       {/*<Route path="/about" component={About}></Route>*/}
       <Route path="/classes" component={Classes}></Route>
@@ -47,6 +45,7 @@ ReactDOM.render(
       <Route path="/sign-out" onEnter={signOut}></Route>
       <Route path="/contact" component={Contact}></Route>
     </Route>
-  </Router>,
+  </Router>
+  </Provider>,
   document.getElementById('root')
 )

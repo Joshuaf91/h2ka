@@ -13,9 +13,10 @@ const validateUser = (req, res) => {
     }
   })
   .then((data) => {
-    res.send({
-      id: data.id
-    })
+    req.session.userID = data.id;
+    req.session.cookie.maxAge = 1000*60*3;
+    req.session.save();
+    res.send(data);
   })
   .catch((err) => {
     res.sendStatus(500)
@@ -25,18 +26,28 @@ const validateUser = (req, res) => {
 const getUserbyId = (req, res) => {
   User.findById(req.params.id)
   .then((data) => {
-    console.log(data)
-    data.password = null;
-    // let userInfo = Object.assign({}, data, {password: null})
-    // console.log(userInfo)
     res.send(data)
   })
 }
 
+const validateUser1 = (req, res) => {
+  if(req.session.userID){
+    User.findById(req.params.id)
+    .then((data) => {
+      res.send(data)
+    })
+  }else {
+    res.send(false);
+  }
+}
+
+router.route('/validate')
+  .get(validateUser)
+
+router.route('/validate/1')
+  .get(validateUser1)
+
 router.route('/:id')
   .get(getUserbyId)
-
-router.route('/validate/:user/:password')
-  .get(validateUser)
 
 module.exports = router;

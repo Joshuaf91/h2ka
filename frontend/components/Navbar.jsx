@@ -1,59 +1,55 @@
 import React from 'react';
 import {Link} from 'react-router';
+import {connect} from 'react-redux';
 
-const Navbar = React.createClass({
-  login: function(){
+
+
+
+
+const Navbar = (props)=>{
+  let login = function(){
     var trueOutput = 
       [
-        <li><Link to={"/create-post"} key="CreatePost">CreatePost</Link></li>,
-        <li><Link to={"/sign-out"} key="Sign Out">Sign Out</Link></li>
+        <li key="CreatePost"><Link to={"/create-post"} >CreatePost</Link></li>,
+        <li key="Sign Out"><Link to={"/sign-out"} >Sign Out</Link></li>
       ]
-    function setCookie(cname, cvalue, exdays) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));
-        var expires = "expires="+d.toUTCString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    }
-
-    function getCookie(cname) {
-        var name = cname + "=";
-        var ca = document.cookie.split(';');
-        for(var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    }
-    var user = getCookie("userId");
-    if (user != "") {
+    console.log(props)
+    if (props.user) {
         return(trueOutput)
     } else {
-        return (<li><Link to="login" key="login">Login</Link></li>)
+        return (<li key="login"><Link to="login">Login</Link></li>)
     }
-  },
-  render: function(){
-    var links= ["About", "Classes", "Gallery", "Calendar", "Contact"]
-    links = links.map(function(element,index){
-      return(<li key={index}><Link to={"/"+element.toLowerCase()} key={index}>{element}</Link></li>)
-      })
-    return (
-      <div>
-        <nav>
-          <p className="brand">h2ka</p>
-          <ul className="navBar">
-            <li><Link to={"/"}>Home</Link></li>
-            {links}
-            {this.login()}
-          </ul>
-        </nav>
-      </div>
-    )
-  }
-})
+  };
+  var links= ["About", "Classes", "Gallery", "Calendar", "Contact"]
+  links = links.map(function(element,index){
+    return(<li key={index}><Link to={"/"+element.toLowerCase()}>{element}</Link></li>)
+    })
+  return (
+    <div>
+      <nav>
+        <p className="brand">h2ka</p>
+        <ul className="navBar">
+          <li key={"Home"}><Link to={"/"}>Home</Link></li>
+          {links}
+          {login()}
+        </ul>
+      </nav>
+    </div>
+  )
+}
 
-export default Navbar;
+// function mapStateToProps(state) {
+//   return { todos: state.todos }
+// }
+
+// function mapDispatchToProps(dispatch) {
+//   return { actions: bindActionCreators(actionCreators, dispatch) }
+// }
+
+// export default connect(mapStateToProps, mapDispatchToProps)(TodoApp)
+
+const stateToProps = (state)=>{
+  return {user : state.user}
+}
+
+export default connect(stateToProps)(Navbar)

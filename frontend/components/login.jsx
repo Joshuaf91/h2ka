@@ -10,8 +10,8 @@ var Router = require('react-router');
 const Login = React.createClass ({
   getInitialState: function(){
       return {
-        username: "",
-        password: ""
+        username: "joshuaf91",
+        password: "test1"
       }
   },
   handleChange: function(input, e){
@@ -22,21 +22,14 @@ const Login = React.createClass ({
   submit: function(e){
     e.preventDefault()
     ajax({
-      url: "/api/user/validate/" + this.state.username + "/" + this.state.password,
+      url: "/api/user/validate",
       type: "GET",
       data: this.state
     })
-    .then(function(data) {
-      function setCookie(cname, cvalue, exdays) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));
-        var expires = "expires="+d.toUTCString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-      }
-      setCookie("userId", data.id);
-      Router.browserHistory.push("/")
+    .then((data)=> {
+      console.log(data)
+      Router.browserHistory.push("/");
     })
-    // Router.browserHistory.push('/');
   },
   render: function(){
     return (

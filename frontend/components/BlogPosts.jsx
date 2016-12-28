@@ -27,7 +27,6 @@ const BlogPosts = React.createClass({
   render: function(){
     return (
       <div>
-
         {
           this.state.blogPost ? this.state.blogPost.map((element, index)=>{
             element.createdAt = element.createdAt.split('.')[0];

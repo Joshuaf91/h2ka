@@ -35,13 +35,34 @@ const makeNewPost = (req, res) => {
 				res.sendStatus(500);
 			})
 	}else{
-		res.sendStatus(400)
+		//this user cant make post.
+		res.sendStatus(500)
 	}
 }
 
+const getById= (req,res)=>{
+	console.log(req.params.id);
+	Post.findOne({
+		where: {
+			id: req.params.id
+		},
+		include:[User]
+	})
+	.then(data=>{
+		res.send(data);
+	})
+	.catch(err=>{
+		res.sendStatus(500);
+	})
+}
 
 router.route("/")
 	.get(getAllPost)
-	.post(makeNewPost)
+	.post(makeNewPost);
+
+router.route("/:id")
+	.get(getById)
+	// .put(editById)
+	// .delet(removeById);
 
 module.exports = router;
