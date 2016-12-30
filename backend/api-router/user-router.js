@@ -16,6 +16,7 @@ const validateUser = (req, res) => {
     req.session.userID = data.id;
     req.session.cookie.maxAge = 1000*60*3;
     req.session.save();
+    console.log(req.session);
     res.send(data);
   })
   .catch((err) => {
@@ -30,9 +31,11 @@ const getUserbyId = (req, res) => {
   })
 }
 
+//this handels checks if session exist will autmoatcly log user in.
 const validateUser1 = (req, res) => {
+  console.log(req.session)
   if(req.session.userID){
-    User.findById(req.params.id)
+    User.findById(req.session.userID)
     .then((data) => {
       res.send(data)
     })

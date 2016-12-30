@@ -6,16 +6,18 @@ import { withRouter ,Router, Route, IndexRoute, browserHistory } from 'react-rou
 import {Provider} from 'react-redux';
 import Store from './store/store';
 import user_actions from './actions/user-action';
+import blog_actions from './actions/blog-action';
 
 // components
 import Navbar from './components/Navbar';
-import BlogPosts from './components/BlogPosts';
+import BlogPosts from './components/blogPost/BlogPosts';
 import CreatePost from './components/CreatePost';
 import Login from "./components/Login";
 import Classes from "./components/Classes";
 import Calendar from "./components/Calendar";
 import Gallery from "./components/Gallery";
 import Contact from "./components/Contact";
+import About from "./components/About";
 
 const App = withRouter((props)=>
   (
@@ -26,25 +28,38 @@ const App = withRouter((props)=>
   )
 )
 
-const signOut= function(){
+const signOut= ()=>{
   //end session for now just setting state to false but session has not really ended.
-  Store.dispatch(signOut());
+  Store.dispatch(user_actions.signOut())
+  .then(data=>{
+    browserHistory.push('/')
+  })
+}
+
+const validate = ()=>{
+  Store.dispatch(user_actions.validate())
+}
+
+const getPost = ()=>{
+  Store.dispatch(blog_actions.serverGetPost())
 }
 
 ReactDOM.render(
   <Provider store={Store}>
   <Router history={browserHistory}>
-    <Route path="/" component={App} onEnter={user_actions.validate()}>
-      <IndexRoute component={BlogPosts} />
-      {/*<Route path="/about" component={About}></Route>*/}
-      <Route path="/classes" component={Classes}></Route>
-      <Route path="/calendar" component={Calendar}></Route>
-      <Route path="/gallery" component={Gallery}></Route>
-      <Route path="/create-post" component={CreatePost}></Route>
-      <Route path="/login" component={Login}></Route>
-      <Route path="/sign-out" onEnter={signOut}></Route>
-      <Route path="/contact" component={Contact}></Route>
+    <Route path="/" component={App} onEnter={validate}>
+      <IndexRoute component={BlogPosts} onEnter={getPost}/>
+      {/*<Route path="fullpost/:id" component={SinglePost}/>*/}
+      <Route path="/about" component={About}/>
+      <Route path="/classes" component={Classes}/>
+      <Route path="/calendar" component={Calendar}/>
+      <Route path="/gallery" component={Gallery}/>
+      <Route path="/create-post" component={CreatePost}/>
+      <Route path="/login" component={Login}/>
+      <Route path="/sign-out" onEnter={signOut}/>
+      <Route path="/contact" component={Contact}/>
     </Route>
+    {/*<Route path="*" component={NotFound}/>*/}
   </Router>
   </Provider>,
   document.getElementById('root')

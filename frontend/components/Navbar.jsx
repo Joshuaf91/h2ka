@@ -2,10 +2,6 @@ import React from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
 
-
-
-
-
 const Navbar = (props)=>{
   let login = function(){
     var trueOutput = 
@@ -13,11 +9,11 @@ const Navbar = (props)=>{
         <li key="CreatePost"><Link to={"/create-post"} >CreatePost</Link></li>,
         <li key="Sign Out"><Link to={"/sign-out"} >Sign Out</Link></li>
       ]
-    console.log(props)
+    // console.log(props)
     if (props.user) {
         return(trueOutput)
     } else {
-        return (<li key="login"><Link to="login">Login</Link></li>)
+        return (<li key="login"><Link to="/login">Login</Link></li>)
     }
   };
   var links= ["About", "Classes", "Gallery", "Calendar", "Contact"]
@@ -37,16 +33,6 @@ const Navbar = (props)=>{
     </div>
   )
 }
-
-// function mapStateToProps(state) {
-//   return { todos: state.todos }
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return { actions: bindActionCreators(actionCreators, dispatch) }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(TodoApp)
 
 const stateToProps = (state)=>{
   return {user : state.user}

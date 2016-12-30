@@ -14,6 +14,7 @@ const getUserServer = (data) => dispatch => {
   .done(data => {
     dispatch(getUser(data));
   })
+  return Promise.resolve();
 }
 
 const postUser = (userInfo) => dispatch => {
@@ -26,6 +27,8 @@ const postUser = (userInfo) => dispatch => {
   .done(data => {
     dispatch(getUser(data))
   })
+  // returning a promise so .then can be called if needed
+  return Promise.resolve();
 }
 
 const validate = () => (dispatch) => {
@@ -35,17 +38,22 @@ const validate = () => (dispatch) => {
     type: 'get',
   })
   .done(data=>{
-    console.log("asdfasdfas",dispatch)
-    dispatch(getUser(data))
+    console.log(data);
+    dispatch(getUser(data));
   })
+  // returning a promise so .then can be called if needed
+  return Promise.resolve();
 }
 
 const signOut = dispatch => dispatch =>{
   dispatch(getUser(null))
+  // returning a promise so .then can be called if needed
+  return Promise.resolve();
 }
 
 export default  {
-    getUser,
+    getUserServer,
     postUser,
     validate,
+    signOut,
 }

@@ -1,9 +1,11 @@
 import {combineReducers} from 'redux';
 
 import user from './user.js';
+import blog from './blog.js';
 
 const reducers = {
-	user : user,
+	user,
+	blog,
 }
 
 

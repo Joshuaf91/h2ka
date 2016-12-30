@@ -1,9 +1,11 @@
 import React from 'react';
-import {ajax} from 'jquery';
-// why does this one not work
-  // import {Router} from 'react-router';
-// but this one does see line 37
-var Router = require('react-router');
+// import {ajax} from 'jquery';
+// to be replaced withRouter see line 30ish
+import {connect} from 'react-redux';
+import {browserHistory} from 'react-router';
+
+import Store from '../store/store.js';
+import user_actions from '../actions/user-action';
 
 
 
@@ -20,15 +22,13 @@ const Login = React.createClass ({
     })
   },
   submit: function(e){
-    e.preventDefault()
-    ajax({
-      url: "/api/user/validate",
-      type: "GET",
-      data: this.state
-    })
+    e.preventDefault();
+    // console.log(this.props)
+    Store.dispatch(user_actions.getUserServer(this.state)
+    )
     .then((data)=> {
-      console.log(data)
-      Router.browserHistory.push("/");
+      // console.log(this.props)
+      this.props.router.push('/');
     })
   },
   render: function(){

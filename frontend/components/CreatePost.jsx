@@ -1,12 +1,17 @@
 import React from 'react';
 import {ajax} from 'jquery';
+import {connect} from 'react-redux';
+
+import Store from '../store/store';
+import blog_Action from '../actions/blog-action';
+
 
 const CreatePost = React.createClass ({
   getInitialState: function(){
     return {
       title: "",
       body: "",
-      userId: 1
+      userId: this.props.userID
     }
   },
   handleChange: function(change, e){
@@ -15,14 +20,13 @@ const CreatePost = React.createClass ({
     })
   },
   submit: function(e){
-    ajax({
-      url: '/api/post',
-      type: "POST",
-      data: this.state
+    e.preventDefault();
+
+    Store.dispatch(blog_Action.makePost(this.state))
+    .then(data =>{
+      this.props.router.push('/');
     })
-    .then(function(response){
-      console.log(response)
-    })
+
   },
   render: function(){
     return (
@@ -35,4 +39,8 @@ const CreatePost = React.createClass ({
   }
 })
 
-export default CreatePost;
+const stateToProps = (state)=>{
+  return {userID : state.user.id}
+}
+
+export default connect(stateToProps)(CreatePost)

@@ -69,45 +69,52 @@
 	
 	var _store2 = _interopRequireDefault(_store);
 	
-	var _userAction = __webpack_require__(276);
+	var _userAction = __webpack_require__(266);
 	
 	var _userAction2 = _interopRequireDefault(_userAction);
 	
-	var _Navbar = __webpack_require__(266);
+	var _blogAction = __webpack_require__(279);
+	
+	var _blogAction2 = _interopRequireDefault(_blogAction);
+	
+	var _Navbar = __webpack_require__(268);
 	
 	var _Navbar2 = _interopRequireDefault(_Navbar);
 	
-	var _BlogPosts = __webpack_require__(267);
+	var _BlogPosts = __webpack_require__(280);
 	
 	var _BlogPosts2 = _interopRequireDefault(_BlogPosts);
 	
-	var _CreatePost = __webpack_require__(270);
+	var _CreatePost = __webpack_require__(271);
 	
 	var _CreatePost2 = _interopRequireDefault(_CreatePost);
 	
-	var _Login = __webpack_require__(271);
+	var _Login = __webpack_require__(272);
 	
 	var _Login2 = _interopRequireDefault(_Login);
 	
-	var _Classes = __webpack_require__(272);
+	var _Classes = __webpack_require__(273);
 	
 	var _Classes2 = _interopRequireDefault(_Classes);
 	
-	var _Calendar = __webpack_require__(273);
+	var _Calendar = __webpack_require__(274);
 	
 	var _Calendar2 = _interopRequireDefault(_Calendar);
 	
-	var _Gallery = __webpack_require__(274);
+	var _Gallery = __webpack_require__(275);
 	
 	var _Gallery2 = _interopRequireDefault(_Gallery);
 	
-	var _Contact = __webpack_require__(275);
+	var _Contact = __webpack_require__(276);
 	
 	var _Contact2 = _interopRequireDefault(_Contact);
 	
+	var _About = __webpack_require__(277);
+	
+	var _About2 = _interopRequireDefault(_About);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	// components
 	var App = (0, _reactRouter.withRouter)(function (props) {
 	  return _react2.default.createElement(
 	    'div',
@@ -117,12 +124,25 @@
 	  );
 	});
 	
+	// components
+	
+	
 	//store
 	
 	
 	var signOut = function signOut() {
 	  //end session for now just setting state to false but session has not really ended.
-	  _store2.default.dispatch(signOut());
+	  _store2.default.dispatch(_userAction2.default.signOut()).then(function (data) {
+	    _reactRouter.browserHistory.push('/');
+	  });
+	};
+	
+	var validate = function validate() {
+	  _store2.default.dispatch(_userAction2.default.validate());
+	};
+	
+	var getPost = function getPost() {
+	  _store2.default.dispatch(_blogAction2.default.serverGetPost());
 	};
 	
 	_reactDom2.default.render(_react2.default.createElement(
@@ -133,8 +153,9 @@
 	    { history: _reactRouter.browserHistory },
 	    _react2.default.createElement(
 	      _reactRouter.Route,
-	      { path: '/', component: App, onEnter: _userAction2.default.validate() },
-	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _BlogPosts2.default }),
+	      { path: '/', component: App, onEnter: validate },
+	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _BlogPosts2.default, onEnter: getPost }),
+	      _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '/classes', component: _Classes2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '/calendar', component: _Calendar2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '/gallery', component: _Gallery2.default }),
@@ -28163,10 +28184,15 @@
 	
 	var _user2 = _interopRequireDefault(_user);
 	
+	var _blog = __webpack_require__(278);
+	
+	var _blog2 = _interopRequireDefault(_blog);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var reducers = {
-		user: _user2.default
+		user: _user2.default,
+		blog: _blog2.default
 	};
 	
 	var reducer = (0, _redux.combineReducers)(reducers);
@@ -28206,170 +28232,79 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(179);
-	
-	var _reactRedux = __webpack_require__(234);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Navbar = function Navbar(props) {
-	  var login = function login() {
-	    var trueOutput = [_react2.default.createElement(
-	      'li',
-	      { key: 'CreatePost' },
-	      _react2.default.createElement(
-	        _reactRouter.Link,
-	        { to: "/create-post" },
-	        'CreatePost'
-	      )
-	    ), _react2.default.createElement(
-	      'li',
-	      { key: 'Sign Out' },
-	      _react2.default.createElement(
-	        _reactRouter.Link,
-	        { to: "/sign-out" },
-	        'Sign Out'
-	      )
-	    )];
-	    console.log(props);
-	    if (props.user) {
-	      return trueOutput;
-	    } else {
-	      return _react2.default.createElement(
-	        'li',
-	        { key: 'login' },
-	        _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: 'login' },
-	          'Login'
-	        )
-	      );
-	    }
-	  };
-	  var links = ["About", "Classes", "Gallery", "Calendar", "Contact"];
-	  links = links.map(function (element, index) {
-	    return _react2.default.createElement(
-	      'li',
-	      { key: index },
-	      _react2.default.createElement(
-	        _reactRouter.Link,
-	        { to: "/" + element.toLowerCase() },
-	        element
-	      )
-	    );
-	  });
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'nav',
-	      null,
-	      _react2.default.createElement(
-	        'p',
-	        { className: 'brand' },
-	        'h2ka'
-	      ),
-	      _react2.default.createElement(
-	        'ul',
-	        { className: 'navBar' },
-	        _react2.default.createElement(
-	          'li',
-	          { key: "Home" },
-	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: "/" },
-	            'Home'
-	          )
-	        ),
-	        links,
-	        login()
-	      )
-	    )
-	  );
-	};
-	
-	// function mapStateToProps(state) {
-	//   return { todos: state.todos }
-	// }
-	
-	// function mapDispatchToProps(dispatch) {
-	//   return { actions: bindActionCreators(actionCreators, dispatch) }
-	// }
-	
-	// export default connect(mapStateToProps, mapDispatchToProps)(TodoApp)
-	
-	var stateToProps = function stateToProps(state) {
-	  return { user: state.user };
-	};
-	
-	exports.default = (0, _reactRedux.connect)(stateToProps)(Navbar);
-
-/***/ },
-/* 267 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _jquery = __webpack_require__(268);
+	var _jquery = __webpack_require__(267);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
-	var _IndividualPost = __webpack_require__(269);
-	
-	var _IndividualPost2 = _interopRequireDefault(_IndividualPost);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var BlogPosts = _react2.default.createClass({
-	  displayName: 'BlogPosts',
+	var getUser = function getUser(currentUser) {
+	  return {
+	    type: 'GET_USER',
+	    data: currentUser
+	  };
+	};
 	
-	  getInitialState: function getInitialState() {
-	    return {
-	      blogPost: null
-	    };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.handleRetrieveBlogPosts();
-	  },
-	  handleRetrieveBlogPosts: function handleRetrieveBlogPosts() {
-	    var that = this;
+	var getUserServer = function getUserServer(data) {
+	  return function (dispatch) {
 	    _jquery2.default.ajax({
-	      url: '/api/post',
-	      type: 'GET'
-	    }).then(function (response) {
-	      that.setState({
-	        blogPost: response
-	      });
+	      url: '/api/user/validate',
+	      type: 'GET',
+	      data: data
+	    }).done(function (data) {
+	      dispatch(getUser(data));
 	    });
-	  },
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      this.state.blogPost ? this.state.blogPost.map(function (element, index) {
-	        element.createdAt = element.createdAt.split('.')[0];
-	        return _react2.default.createElement(_IndividualPost2.default, { blogPost: element, key: index });
-	      }) : null
-	    );
-	  }
-	});
+	    return Promise.resolve();
+	  };
+	};
 	
-	exports.default = BlogPosts;
+	var postUser = function postUser(userInfo) {
+	  return function (dispatch) {
+	    console.log(userInfo);
+	    _jquery2.default.ajax({
+	      url: '/api/user/validate',
+	      type: 'POST',
+	      data: userInfo
+	    }).done(function (data) {
+	      dispatch(getUser(data));
+	    });
+	    // returning a promise so .then can be called if needed
+	    return Promise.resolve();
+	  };
+	};
+	
+	var validate = function validate() {
+	  return function (dispatch) {
+	    console.log("validate");
+	    _jquery2.default.ajax({
+	      url: '/api/user/validate/1',
+	      type: 'get'
+	    }).done(function (data) {
+	      console.log(data);
+	      dispatch(getUser(data));
+	    });
+	    // returning a promise so .then can be called if needed
+	    return Promise.resolve();
+	  };
+	};
+	
+	var signOut = function signOut(dispatch) {
+	  return function (dispatch) {
+	    dispatch(getUser(null));
+	    // returning a promise so .then can be called if needed
+	    return Promise.resolve();
+	  };
+	};
+	
+	exports.default = {
+	  getUserServer: getUserServer,
+	  postUser: postUser,
+	  validate: validate,
+	  signOut: signOut
+	};
 
 /***/ },
-/* 268 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -38595,7 +38530,7 @@
 
 
 /***/ },
-/* 269 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38610,110 +38545,95 @@
 	
 	var _reactRouter = __webpack_require__(179);
 	
+	var _reactRedux = __webpack_require__(234);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var IndividualPost = _react2.default.createClass({
-	  displayName: 'IndividualPost',
-	
-	  render: function render() {
-	    console.log(this.props);
-	    return _react2.default.createElement(
-	      'div',
-	      null,
+	var Navbar = function Navbar(props) {
+	  var login = function login() {
+	    var trueOutput = [_react2.default.createElement(
+	      'li',
+	      { key: 'CreatePost' },
 	      _react2.default.createElement(
 	        _reactRouter.Link,
-	        { to: "/fullpost/" + this.props.blogPost.id },
+	        { to: "/create-post" },
+	        'CreatePost'
+	      )
+	    ), _react2.default.createElement(
+	      'li',
+	      { key: 'Sign Out' },
+	      _react2.default.createElement(
+	        _reactRouter.Link,
+	        { to: "/sign-out" },
+	        'Sign Out'
+	      )
+	    )];
+	    // console.log(props)
+	    if (props.user) {
+	      return trueOutput;
+	    } else {
+	      return _react2.default.createElement(
+	        'li',
+	        { key: 'login' },
 	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'title : ',
-	            this.props.blogPost.title
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'author: ',
-	            this.props.blogPost.user.username
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'body: ',
-	            this.props.blogPost.body
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'created at ',
-	            this.props.blogPost.createdAt
-	          )
+	          _reactRouter.Link,
+	          { to: '/login' },
+	          'Login'
 	        )
+	      );
+	    }
+	  };
+	  var links = ["About", "Classes", "Gallery", "Calendar", "Contact"];
+	  links = links.map(function (element, index) {
+	    return _react2.default.createElement(
+	      'li',
+	      { key: index },
+	      _react2.default.createElement(
+	        _reactRouter.Link,
+	        { to: "/" + element.toLowerCase() },
+	        element
 	      )
 	    );
-	  }
-	});
+	  });
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'nav',
+	      null,
+	      _react2.default.createElement(
+	        'p',
+	        { className: 'brand' },
+	        'h2ka'
+	      ),
+	      _react2.default.createElement(
+	        'ul',
+	        { className: 'navBar' },
+	        _react2.default.createElement(
+	          'li',
+	          { key: "Home" },
+	          _react2.default.createElement(
+	            _reactRouter.Link,
+	            { to: "/" },
+	            'Home'
+	          )
+	        ),
+	        links,
+	        login()
+	      )
+	    )
+	  );
+	};
 	
-	exports.default = IndividualPost;
+	var stateToProps = function stateToProps(state) {
+	  return { user: state.user };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(stateToProps)(Navbar);
 
 /***/ },
-/* 270 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _jquery = __webpack_require__(268);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	var CreatePost = _react2.default.createClass({
-	  displayName: 'CreatePost',
-	
-	  getInitialState: function getInitialState() {
-	    return {
-	      title: "",
-	      body: "",
-	      userId: 1
-	    };
-	  },
-	  handleChange: function handleChange(change, e) {
-	    this.setState(_defineProperty({}, change, e.target.value));
-	  },
-	  submit: function submit(e) {
-	    (0, _jquery.ajax)({
-	      url: '/api/post',
-	      type: "POST",
-	      data: this.state
-	    }).then(function (response) {
-	      console.log(response);
-	    });
-	  },
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'form',
-	      { onSubmit: this.submit },
-	      _react2.default.createElement('input', { type: 'text', placeholder: 'Title', onChange: this.handleChange.bind(this, "title"), value: this.state.title }),
-	      _react2.default.createElement('input', { type: 'text', placeholder: 'Body', onChange: this.handleChange.bind(this, "body"), value: this.state.body }),
-	      _react2.default.createElement('input', { type: 'submit' })
-	    );
-	  }
-	});
-	
-	exports.default = CreatePost;
-
-/***/ },
+/* 269 */,
+/* 270 */,
 /* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -38727,16 +38647,93 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _jquery = __webpack_require__(268);
+	var _jquery = __webpack_require__(267);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	var _store = __webpack_require__(262);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _blogAction = __webpack_require__(279);
+	
+	var _blogAction2 = _interopRequireDefault(_blogAction);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	// why does this one not work
-	// import {Router} from 'react-router';
-	// but this one does see line 37
-	var Router = __webpack_require__(179);
+	var CreatePost = _react2.default.createClass({
+	  displayName: 'CreatePost',
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      title: "",
+	      body: "",
+	      userId: this.props.userID
+	    };
+	  },
+	  handleChange: function handleChange(change, e) {
+	    this.setState(_defineProperty({}, change, e.target.value));
+	  },
+	  submit: function submit(e) {
+	    var _this = this;
+	
+	    e.preventDefault();
+	
+	    _store2.default.dispatch(_blogAction2.default.makePost(this.state)).then(function (data) {
+	      _this.props.router.push('/');
+	    });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'form',
+	      { onSubmit: this.submit },
+	      _react2.default.createElement('input', { type: 'text', placeholder: 'Title', onChange: this.handleChange.bind(this, "title"), value: this.state.title }),
+	      _react2.default.createElement('input', { type: 'text', placeholder: 'Body', onChange: this.handleChange.bind(this, "body"), value: this.state.body }),
+	      _react2.default.createElement('input', { type: 'submit' })
+	    );
+	  }
+	});
+	
+	var stateToProps = function stateToProps(state) {
+	  return { userID: state.user.id };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(stateToProps)(CreatePost);
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	var _reactRouter = __webpack_require__(179);
+	
+	var _store = __webpack_require__(262);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _userAction = __webpack_require__(266);
+	
+	var _userAction2 = _interopRequireDefault(_userAction);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	// import {ajax} from 'jquery';
+	// to be replaced withRouter see line 30ish
+	
 	
 	var Login = _react2.default.createClass({
 	  displayName: 'Login',
@@ -38751,14 +38748,13 @@
 	    this.setState(_defineProperty({}, input, e.target.value));
 	  },
 	  submit: function submit(e) {
+	    var _this = this;
+	
 	    e.preventDefault();
-	    (0, _jquery.ajax)({
-	      url: "/api/user/validate",
-	      type: "GET",
-	      data: this.state
-	    }).then(function (data) {
-	      console.log(data);
-	      Router.browserHistory.push("/");
+	    // console.log(this.props)
+	    _store2.default.dispatch(_userAction2.default.getUserServer(this.state)).then(function (data) {
+	      // console.log(this.props)
+	      _this.props.router.push('/');
 	    });
 	  },
 	  render: function render() {
@@ -38779,7 +38775,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 272 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38809,7 +38805,7 @@
 	exports.default = Classes;
 
 /***/ },
-/* 273 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38839,7 +38835,7 @@
 	exports.default = Calendar;
 
 /***/ },
-/* 274 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38869,7 +38865,7 @@
 	exports.default = Gallery;
 
 /***/ },
-/* 275 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38899,7 +38895,7 @@
 	exports.default = Contact;
 
 /***/ },
-/* 276 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38908,68 +38904,215 @@
 	  value: true
 	});
 	
-	var _jquery = __webpack_require__(268);
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var About = _react2.default.createClass({
+	  displayName: 'About',
+	
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      'This is the About page'
+	    );
+	  }
+	});
+	
+	exports.default = About;
+
+/***/ },
+/* 278 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var blog = function blog() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case "GET_BLOG":
+	      return action.data;
+	    default:
+	      return state;
+	  }
+	};
+	
+	exports.default = blog;
+
+/***/ },
+/* 279 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _jquery = __webpack_require__(267);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var getUser = function getUser(currentUser) {
+	var getPost = function getPost(currentPost) {
 	  return {
-	    type: 'GET_USER',
-	    data: currentUser
+	    type: 'GET_BLOG',
+	    data: currentPost
 	  };
 	};
 	
-	var getUserServer = function getUserServer(data) {
+	var serverGetPost = function serverGetPost() {
 	  return function (dispatch) {
 	    _jquery2.default.ajax({
-	      url: '/api/user/validate',
-	      type: 'GET',
-	      data: data
+	      url: '/api/post/',
+	      type: 'GET'
 	    }).done(function (data) {
-	      dispatch(getUser(data));
+	      dispatch(getPost(data));
 	    });
+	    // returning a promise so .then can be called if needed
+	    return Promise.resolve();
 	  };
 	};
 	
-	var postUser = function postUser(userInfo) {
+	var makePost = function makePost(data) {
 	  return function (dispatch) {
-	    console.log(userInfo);
 	    _jquery2.default.ajax({
-	      url: '/api/user/validate',
+	      url: '/api/post/',
 	      type: 'POST',
-	      data: userInfo
-	    }).done(function (data) {
-	      dispatch(getUser(data));
+	      data: data
 	    });
-	  };
-	};
-	
-	var validate = function validate() {
-	  return function (dispatch) {
-	    console.log("validate");
-	    _jquery2.default.ajax({
-	      url: '/api/user/validate/1',
-	      type: 'get'
-	    }).done(function (data) {
-	      console.log("asdfasdfas", dispatch);
-	      dispatch(getUser(data));
-	    });
-	  };
-	};
-	
-	var signOut = function signOut(dispatch) {
-	  return function (dispatch) {
-	    dispatch(getUser(null));
+	    // .done(data => {
+	    //   serverGetPost();
+	    // })
+	    // returning a promise so .then can be called if needed
+	    return Promise.resolve();
 	  };
 	};
 	
 	exports.default = {
-	  getUser: getUser,
-	  postUser: postUser,
-	  validate: validate
+	  serverGetPost: serverGetPost,
+	  makePost: makePost
+	
 	};
+
+/***/ },
+/* 280 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _jquery = __webpack_require__(267);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	var _IndividualPost = __webpack_require__(281);
+	
+	var _IndividualPost2 = _interopRequireDefault(_IndividualPost);
+	
+	var _store = __webpack_require__(262);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _blogAction = __webpack_require__(279);
+	
+	var _blogAction2 = _interopRequireDefault(_blogAction);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var BlogPosts = function BlogPosts(props) {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    props.blog ? props.blog.reverse().map(function (element, index) {
+	      element.createdAt = element.createdAt.split('.')[0];
+	      return _react2.default.createElement(_IndividualPost2.default, { blogPost: element, key: index });
+	    }) : null
+	  );
+	};
+	
+	var stateToProps = function stateToProps(state) {
+	  return { blog: state.blog };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(stateToProps)(BlogPosts);
+
+/***/ },
+/* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(179);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var IndividualPost = function IndividualPost(props) {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      _reactRouter.Link,
+	      { to: "/fullpost/" + props.blogPost.id },
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'title : ',
+	          props.blogPost.title
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'author: ',
+	          props.blogPost.user.username
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'body: ',
+	          props.blogPost.body
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'created at ',
+	          props.blogPost.createdAt
+	        )
+	      )
+	    )
+	  );
+	};
+	
+	exports.default = IndividualPost;
 
 /***/ }
 /******/ ]);
