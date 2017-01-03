@@ -13,6 +13,7 @@ import pdf_actions from './actions/pdf-action';
 import Navbar from './components/Navbar';
 import BlogPosts from './components/blogPost/BlogPosts';
 import Forms from './components/forms/Forms';
+import SinglePost from './components/singlePost/singlePost';
 import CreatePost from './components/CreatePost';
 import Login from './components/Login';
 import Classes from './components/Classes';
@@ -21,17 +22,18 @@ import Gallery from './components/Gallery';
 import Contact from './components/Contact';
 import About from './components/About';
 
-const App = withRouter((props)=>
-  (
+const App = withRouter((props)=>{
+  
+  return(
   <div>
     <Navbar />
     {props.children}
   </div>
-  )
+  )}
 )
 
 const signOut= ()=>{
-  //end session for now just setting state to false but session has not really ended.
+  //end session** for now just setting state to false but session has not really ended**.
   Store.dispatch(user_actions.signOut())
   .then(data=>{
     browserHistory.push('/')
@@ -55,7 +57,9 @@ ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={App} onEnter={validate}>
       <IndexRoute component={BlogPosts} onEnter={getPost}/>
-      {/*<Route path="fullpost/:id" component={SinglePost}/>*/}
+      <Route path="fullpost/:id" component={SinglePost}>
+        {/*<Route path="/edit" component={EditPost} />*/}
+      </Route>
       <Route path="/about" component={About}/>
       <Route path="/forms" component={Forms} onEnter={getForms}/>
       <Route path="/classes" component={Classes}/>

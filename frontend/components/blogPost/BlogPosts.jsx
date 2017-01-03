@@ -10,10 +10,10 @@ import blog_Actions from '../../actions/blog-action';
 const BlogPosts = (props)=>(
   <div>
     {
-      props.blog ? props.blog.reverse().map((element, index)=>{
+      props.blog ? props.blog.map((element, index)=>{
         element.createdAt = element.createdAt.split('.')[0];
         return(
-          <IndividualPost blogPost={element} key={index}/>
+          <IndividualPost blogPost={element} key={index} goTo={props.goTo}/>
     )}) : null
     }
   </div>
@@ -21,8 +21,11 @@ const BlogPosts = (props)=>(
 
 
 
-const stateToProps = (state)=>{
-  return {blog : state.blog}
+const stateToProps = (state , ownProps)=>{
+  return {
+    blog : state.blog, 
+    goTo : ownProps.router.push
+  }
 }
 
 export default connect(stateToProps)(BlogPosts)

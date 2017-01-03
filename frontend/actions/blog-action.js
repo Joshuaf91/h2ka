@@ -13,7 +13,7 @@ const serverGetPost = () => dispatch => {
     type: 'GET'
   })
   .done(data => {
-    dispatch(getPost(data))
+    dispatch(getPost(data.reverse()))
   })
   // returning a promise so .then can be called if needed
   return Promise.resolve();
@@ -25,9 +25,9 @@ const makePost = (data) => dispatch =>{
     type: 'POST',
     data: data
   })
-  // .done(data => {
-  //   serverGetPost();
-  // })
+  .done(data => {
+    serverGetPost();
+  })
   // returning a promise so .then can be called if needed
   return Promise.resolve();
 }
