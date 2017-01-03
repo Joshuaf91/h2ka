@@ -38,5 +38,4 @@ const makePost = (data) => dispatch =>{
 export default  {
   serverGetPost,
   makePost,
-
 }

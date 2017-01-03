@@ -69,52 +69,61 @@
 	
 	var _store2 = _interopRequireDefault(_store);
 	
-	var _userAction = __webpack_require__(266);
+	var _userAction = __webpack_require__(267);
 	
 	var _userAction2 = _interopRequireDefault(_userAction);
 	
-	var _blogAction = __webpack_require__(279);
+	var _blogAction = __webpack_require__(269);
 	
 	var _blogAction2 = _interopRequireDefault(_blogAction);
 	
-	var _Navbar = __webpack_require__(268);
+	var _pdfAction = __webpack_require__(283);
+	
+	var _pdfAction2 = _interopRequireDefault(_pdfAction);
+	
+	var _Navbar = __webpack_require__(270);
 	
 	var _Navbar2 = _interopRequireDefault(_Navbar);
 	
-	var _BlogPosts = __webpack_require__(280);
+	var _BlogPosts = __webpack_require__(271);
 	
 	var _BlogPosts2 = _interopRequireDefault(_BlogPosts);
 	
-	var _CreatePost = __webpack_require__(271);
+	var _Forms = __webpack_require__(273);
+	
+	var _Forms2 = _interopRequireDefault(_Forms);
+	
+	var _CreatePost = __webpack_require__(274);
 	
 	var _CreatePost2 = _interopRequireDefault(_CreatePost);
 	
-	var _Login = __webpack_require__(272);
+	var _Login = __webpack_require__(275);
 	
 	var _Login2 = _interopRequireDefault(_Login);
 	
-	var _Classes = __webpack_require__(273);
+	var _Classes = __webpack_require__(276);
 	
 	var _Classes2 = _interopRequireDefault(_Classes);
 	
-	var _Calendar = __webpack_require__(274);
+	var _Calendar = __webpack_require__(277);
 	
 	var _Calendar2 = _interopRequireDefault(_Calendar);
 	
-	var _Gallery = __webpack_require__(275);
+	var _Gallery = __webpack_require__(278);
 	
 	var _Gallery2 = _interopRequireDefault(_Gallery);
 	
-	var _Contact = __webpack_require__(276);
+	var _Contact = __webpack_require__(279);
 	
 	var _Contact2 = _interopRequireDefault(_Contact);
 	
-	var _About = __webpack_require__(277);
+	var _About = __webpack_require__(280);
 	
 	var _About2 = _interopRequireDefault(_About);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	// components
 	var App = (0, _reactRouter.withRouter)(function (props) {
 	  return _react2.default.createElement(
 	    'div',
@@ -123,9 +132,6 @@
 	    props.children
 	  );
 	});
-	
-	// components
-	
 	
 	//store
 	
@@ -145,6 +151,10 @@
 	  _store2.default.dispatch(_blogAction2.default.serverGetPost());
 	};
 	
+	var getForms = function getForms() {
+	  _store2.default.dispatch(_pdfAction2.default.serverGetPdf());
+	};
+	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
 	  { store: _store2.default },
@@ -156,6 +166,7 @@
 	      { path: '/', component: App, onEnter: validate },
 	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _BlogPosts2.default, onEnter: getPost }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default }),
+	      _react2.default.createElement(_reactRouter.Route, { path: '/forms', component: _Forms2.default, onEnter: getForms }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '/classes', component: _Classes2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '/calendar', component: _Calendar2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '/gallery', component: _Gallery2.default }),
@@ -28184,15 +28195,20 @@
 	
 	var _user2 = _interopRequireDefault(_user);
 	
-	var _blog = __webpack_require__(278);
+	var _blog = __webpack_require__(266);
 	
 	var _blog2 = _interopRequireDefault(_blog);
+	
+	var _pdf = __webpack_require__(282);
+	
+	var _pdf2 = _interopRequireDefault(_pdf);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var reducers = {
 		user: _user2.default,
-		blog: _blog2.default
+		blog: _blog2.default,
+		pdf: _pdf2.default
 	};
 	
 	var reducer = (0, _redux.combineReducers)(reducers);
@@ -28224,6 +28240,29 @@
 
 /***/ },
 /* 266 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var blog = function blog() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case "GET_BLOG":
+	      return action.data;
+	    default:
+	      return state;
+	  }
+	};
+	
+	exports.default = blog;
+
+/***/ },
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28232,7 +28271,7 @@
 	  value: true
 	});
 	
-	var _jquery = __webpack_require__(267);
+	var _jquery = __webpack_require__(268);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
@@ -28304,7 +28343,7 @@
 	};
 
 /***/ },
-/* 267 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -38530,7 +38569,63 @@
 
 
 /***/ },
-/* 268 */
+/* 269 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _jquery = __webpack_require__(268);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var getPost = function getPost(currentPost) {
+	  return {
+	    type: 'GET_BLOG',
+	    data: currentPost
+	  };
+	};
+	
+	var serverGetPost = function serverGetPost() {
+	  return function (dispatch) {
+	    _jquery2.default.ajax({
+	      url: '/api/post/',
+	      type: 'GET'
+	    }).done(function (data) {
+	      dispatch(getPost(data));
+	    });
+	    // returning a promise so .then can be called if needed
+	    return Promise.resolve();
+	  };
+	};
+	
+	var makePost = function makePost(data) {
+	  return function (dispatch) {
+	    _jquery2.default.ajax({
+	      url: '/api/post/',
+	      type: 'POST',
+	      data: data
+	    });
+	    // .done(data => {
+	    //   serverGetPost();
+	    // })
+	    // returning a promise so .then can be called if needed
+	    return Promise.resolve();
+	  };
+	};
+	
+	exports.default = {
+	  serverGetPost: serverGetPost,
+	  makePost: makePost
+	};
+
+/***/ },
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38583,7 +38678,7 @@
 	      );
 	    }
 	  };
-	  var links = ["About", "Classes", "Gallery", "Calendar", "Contact"];
+	  var links = ["About", "Classes", "Gallery", "Calendar", "Contact", "Forms"];
 	  links = links.map(function (element, index) {
 	    return _react2.default.createElement(
 	      'li',
@@ -38632,8 +38727,6 @@
 	exports.default = (0, _reactRedux.connect)(stateToProps)(Navbar);
 
 /***/ },
-/* 269 */,
-/* 270 */,
 /* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -38647,384 +38740,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _jquery = __webpack_require__(267);
-	
-	var _reactRedux = __webpack_require__(234);
-	
-	var _store = __webpack_require__(262);
-	
-	var _store2 = _interopRequireDefault(_store);
-	
-	var _blogAction = __webpack_require__(279);
-	
-	var _blogAction2 = _interopRequireDefault(_blogAction);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	var CreatePost = _react2.default.createClass({
-	  displayName: 'CreatePost',
-	
-	  getInitialState: function getInitialState() {
-	    return {
-	      title: "",
-	      body: "",
-	      userId: this.props.userID
-	    };
-	  },
-	  handleChange: function handleChange(change, e) {
-	    this.setState(_defineProperty({}, change, e.target.value));
-	  },
-	  submit: function submit(e) {
-	    var _this = this;
-	
-	    e.preventDefault();
-	
-	    _store2.default.dispatch(_blogAction2.default.makePost(this.state)).then(function (data) {
-	      _this.props.router.push('/');
-	    });
-	  },
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'form',
-	      { onSubmit: this.submit },
-	      _react2.default.createElement('input', { type: 'text', placeholder: 'Title', onChange: this.handleChange.bind(this, "title"), value: this.state.title }),
-	      _react2.default.createElement('input', { type: 'text', placeholder: 'Body', onChange: this.handleChange.bind(this, "body"), value: this.state.body }),
-	      _react2.default.createElement('input', { type: 'submit' })
-	    );
-	  }
-	});
-	
-	var stateToProps = function stateToProps(state) {
-	  return { userID: state.user.id };
-	};
-	
-	exports.default = (0, _reactRedux.connect)(stateToProps)(CreatePost);
-
-/***/ },
-/* 272 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRedux = __webpack_require__(234);
-	
-	var _reactRouter = __webpack_require__(179);
-	
-	var _store = __webpack_require__(262);
-	
-	var _store2 = _interopRequireDefault(_store);
-	
-	var _userAction = __webpack_require__(266);
-	
-	var _userAction2 = _interopRequireDefault(_userAction);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	// import {ajax} from 'jquery';
-	// to be replaced withRouter see line 30ish
-	
-	
-	var Login = _react2.default.createClass({
-	  displayName: 'Login',
-	
-	  getInitialState: function getInitialState() {
-	    return {
-	      username: "joshuaf91",
-	      password: "test1"
-	    };
-	  },
-	  handleChange: function handleChange(input, e) {
-	    this.setState(_defineProperty({}, input, e.target.value));
-	  },
-	  submit: function submit(e) {
-	    var _this = this;
-	
-	    e.preventDefault();
-	    // console.log(this.props)
-	    _store2.default.dispatch(_userAction2.default.getUserServer(this.state)).then(function (data) {
-	      // console.log(this.props)
-	      _this.props.router.push('/');
-	    });
-	  },
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      _react2.default.createElement(
-	        'form',
-	        { onSubmit: this.submit },
-	        _react2.default.createElement('input', { type: 'text', value: this.state.username, onChange: this.handleChange.bind(this, "username"), placeholder: 'username' }),
-	        _react2.default.createElement('input', { type: 'text', value: this.state.password, onChange: this.handleChange.bind(this, "password"), placeholder: 'password' }),
-	        _react2.default.createElement('input', { type: 'submit' })
-	      )
-	    );
-	  }
-	});
-	
-	exports.default = Login;
-
-/***/ },
-/* 273 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Classes = _react2.default.createClass({
-	  displayName: 'Classes',
-	
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      'This is the Classes Page'
-	    );
-	  }
-	});
-	
-	exports.default = Classes;
-
-/***/ },
-/* 274 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Calendar = _react2.default.createClass({
-	  displayName: 'Calendar',
-	
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      'This is the Calendar Page'
-	    );
-	  }
-	});
-	
-	exports.default = Calendar;
-
-/***/ },
-/* 275 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Gallery = _react2.default.createClass({
-	  displayName: 'Gallery',
-	
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      'This is the Gallery Page'
-	    );
-	  }
-	});
-	
-	exports.default = Gallery;
-
-/***/ },
-/* 276 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Contact = _react2.default.createClass({
-	  displayName: 'Contact',
-	
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      'This is the Contact Page'
-	    );
-	  }
-	});
-	
-	exports.default = Contact;
-
-/***/ },
-/* 277 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var About = _react2.default.createClass({
-	  displayName: 'About',
-	
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      'This is the About page'
-	    );
-	  }
-	});
-	
-	exports.default = About;
-
-/***/ },
-/* 278 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var blog = function blog() {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-	  var action = arguments[1];
-	
-	  switch (action.type) {
-	    case "GET_BLOG":
-	      return action.data;
-	    default:
-	      return state;
-	  }
-	};
-	
-	exports.default = blog;
-
-/***/ },
-/* 279 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _jquery = __webpack_require__(267);
-	
-	var _jquery2 = _interopRequireDefault(_jquery);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var getPost = function getPost(currentPost) {
-	  return {
-	    type: 'GET_BLOG',
-	    data: currentPost
-	  };
-	};
-	
-	var serverGetPost = function serverGetPost() {
-	  return function (dispatch) {
-	    _jquery2.default.ajax({
-	      url: '/api/post/',
-	      type: 'GET'
-	    }).done(function (data) {
-	      dispatch(getPost(data));
-	    });
-	    // returning a promise so .then can be called if needed
-	    return Promise.resolve();
-	  };
-	};
-	
-	var makePost = function makePost(data) {
-	  return function (dispatch) {
-	    _jquery2.default.ajax({
-	      url: '/api/post/',
-	      type: 'POST',
-	      data: data
-	    });
-	    // .done(data => {
-	    //   serverGetPost();
-	    // })
-	    // returning a promise so .then can be called if needed
-	    return Promise.resolve();
-	  };
-	};
-	
-	exports.default = {
-	  serverGetPost: serverGetPost,
-	  makePost: makePost
-	
-	};
-
-/***/ },
-/* 280 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _jquery = __webpack_require__(267);
+	var _jquery = __webpack_require__(268);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _IndividualPost = __webpack_require__(281);
+	var _IndividualPost = __webpack_require__(272);
 	
 	var _IndividualPost2 = _interopRequireDefault(_IndividualPost);
 	
@@ -39032,7 +38754,7 @@
 	
 	var _store2 = _interopRequireDefault(_store);
 	
-	var _blogAction = __webpack_require__(279);
+	var _blogAction = __webpack_require__(269);
 	
 	var _blogAction2 = _interopRequireDefault(_blogAction);
 	
@@ -39056,7 +38778,7 @@
 	exports.default = (0, _reactRedux.connect)(stateToProps)(BlogPosts);
 
 /***/ },
-/* 281 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39113,6 +38835,555 @@
 	};
 	
 	exports.default = IndividualPost;
+
+/***/ },
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactFileInput = __webpack_require__(281);
+	
+	var _reactFileInput2 = _interopRequireDefault(_reactFileInput);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	var _store = __webpack_require__(262);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _pdfAction = __webpack_require__(283);
+	
+	var _pdfAction2 = _interopRequireDefault(_pdfAction);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	var Form = _react2.default.createClass({
+		displayName: 'Form',
+		getInitialState: function getInitialState() {
+			return { title: '', file: null };
+		},
+		change: function change(what, e) {
+			if (what === 'file') {
+				console.log(e.target.files[0]);
+				this.setState({ file: e.target.files[0] });
+			} else {
+				this.setState(_defineProperty({}, what, e.target.value));
+			}
+		},
+		sub: function sub(e) {
+			e.preventDefault();
+			// Store.dispatch(pdf_Action.postPDF(this.state))
+			var formData = new FormData();
+			//can use the if statement to check type i.e !file.type.match('image.*')
+			if (true) {
+				// Add the file to the request before sending it to dispatch.
+				formData.append('title', this.state.title);
+				formData.append('file', this.state.file, this.state.file.name);
+			}
+			_store2.default.dispatch(_pdfAction2.default.postPDF(formData));
+		},
+		render: function render() {
+			console.log(this.props);
+			var display = this.props.pdf ? this.props.pdf.map(function (ele, index) {
+				return _react2.default.createElement(
+					'div',
+					{ key: index },
+					_react2.default.createElement(
+						'a',
+						{ target: '_blank', href: "/Forms/" + ele, title: 'i dont know' },
+						' ',
+						ele.split('.')[0],
+						' '
+					),
+					' ',
+					_react2.default.createElement('br', null)
+				);
+			}) : null;
+			return _react2.default.createElement(
+				'div',
+				null,
+				display,
+				this.props.user.id == 1 ? _react2.default.createElement(
+					'form',
+					{ onSubmit: this.sub },
+					_react2.default.createElement('input', { type: 'text', placeholder: 'title', onChange: this.change.bind(this, "title"), value: this.state.title }),
+					_react2.default.createElement(_reactFileInput2.default, { name: 'myImage',
+						accept: '.pdf',
+						placeholder: 'My PDF',
+						onChange: this.change.bind(this, "file") }),
+					_react2.default.createElement('input', { type: 'submit' })
+				) : null
+			);
+		}
+	});
+	
+	var stateToProps = function stateToProps(state) {
+		return {
+			user: state.user,
+			pdf: state.pdf
+		};
+	};
+	
+	exports.default = (0, _reactRedux.connect)(stateToProps)(Form);
+
+/***/ },
+/* 274 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _jquery = __webpack_require__(268);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	var _store = __webpack_require__(262);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _blogAction = __webpack_require__(269);
+	
+	var _blogAction2 = _interopRequireDefault(_blogAction);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	var CreatePost = _react2.default.createClass({
+	  displayName: 'CreatePost',
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      title: "",
+	      body: "",
+	      userId: this.props.userID
+	    };
+	  },
+	  handleChange: function handleChange(change, e) {
+	    this.setState(_defineProperty({}, change, e.target.value));
+	  },
+	  submit: function submit(e) {
+	    var _this = this;
+	
+	    e.preventDefault();
+	
+	    _store2.default.dispatch(_blogAction2.default.makePost(this.state)).then(function (data) {
+	      _this.props.router.push('/');
+	    });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'form',
+	      { onSubmit: this.submit },
+	      _react2.default.createElement('input', { type: 'text', placeholder: 'Title', onChange: this.handleChange.bind(this, "title"), value: this.state.title }),
+	      _react2.default.createElement('input', { type: 'text', placeholder: 'Body', onChange: this.handleChange.bind(this, "body"), value: this.state.body }),
+	      _react2.default.createElement('input', { type: 'submit' })
+	    );
+	  }
+	});
+	
+	var stateToProps = function stateToProps(state) {
+	  return { userID: state.user.id };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(stateToProps)(CreatePost);
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	var _reactRouter = __webpack_require__(179);
+	
+	var _store = __webpack_require__(262);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _userAction = __webpack_require__(267);
+	
+	var _userAction2 = _interopRequireDefault(_userAction);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	// import {ajax} from 'jquery';
+	// to be replaced withRouter see line 30ish
+	
+	
+	var Login = _react2.default.createClass({
+	  displayName: 'Login',
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      username: "joshuaf91",
+	      password: "test1"
+	    };
+	  },
+	  handleChange: function handleChange(input, e) {
+	    this.setState(_defineProperty({}, input, e.target.value));
+	  },
+	  submit: function submit(e) {
+	    var _this = this;
+	
+	    e.preventDefault();
+	    // console.log(this.props)
+	    _store2.default.dispatch(_userAction2.default.getUserServer(this.state)).then(function (data) {
+	      // console.log(this.props)
+	      _this.props.router.push('/');
+	    });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'form',
+	        { onSubmit: this.submit },
+	        _react2.default.createElement('input', { type: 'text', value: this.state.username, onChange: this.handleChange.bind(this, "username"), placeholder: 'username' }),
+	        _react2.default.createElement('input', { type: 'text', value: this.state.password, onChange: this.handleChange.bind(this, "password"), placeholder: 'password' }),
+	        _react2.default.createElement('input', { type: 'submit' })
+	      )
+	    );
+	  }
+	});
+	
+	exports.default = Login;
+
+/***/ },
+/* 276 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Classes = _react2.default.createClass({
+	  displayName: 'Classes',
+	
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      'This is the Classes Page'
+	    );
+	  }
+	});
+	
+	exports.default = Classes;
+
+/***/ },
+/* 277 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Calendar = _react2.default.createClass({
+	  displayName: 'Calendar',
+	
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      'This is the Calendar Page'
+	    );
+	  }
+	});
+	
+	exports.default = Calendar;
+
+/***/ },
+/* 278 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Gallery = _react2.default.createClass({
+	  displayName: 'Gallery',
+	
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      'This is the Gallery Page'
+	    );
+	  }
+	});
+	
+	exports.default = Gallery;
+
+/***/ },
+/* 279 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Contact = _react2.default.createClass({
+	  displayName: 'Contact',
+	
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      'This is the Contact Page'
+	    );
+	  }
+	});
+	
+	exports.default = Contact;
+
+/***/ },
+/* 280 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var About = _react2.default.createClass({
+	  displayName: 'About',
+	
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      'This is the About page'
+	    );
+	  }
+	});
+	
+	exports.default = About;
+
+/***/ },
+/* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(2);
+	
+	var FileInput = React.createClass({
+	  getInitialState: function() {
+	    return {
+	      value: '',
+	      styles: {
+	        parent: {
+	          position: 'relative'
+	        },
+	        file: {
+	          position: 'absolute',
+	          top: 0,
+	          left: 0,
+	          opacity: 0,
+	          width: '100%',
+	          zIndex: 1
+	        },
+	        text: {
+	          position: 'relative',
+	          zIndex: -1
+	        }
+	      }
+	    };
+	  },
+	
+	  handleChange: function(e) {
+	    this.setState({
+	      value: e.target.value.split(/(\\|\/)/g).pop()
+	    });
+	    if (this.props.onChange) this.props.onChange(e);
+	  },
+	
+	  render: function() {
+	    return React.DOM.div({
+	        style: this.state.styles.parent
+	      },
+	
+	      // Actual file input
+	      React.DOM.input({
+	        type: 'file',
+	        name: this.props.name,
+	        className: this.props.className,
+	        onChange: this.handleChange,
+	        disabled: this.props.disabled,
+	        accept: this.props.accept,
+	        style: this.state.styles.file
+	      }),
+	
+	      // Emulated file input
+	      React.DOM.input({
+	        type: 'text',
+	        tabIndex: -1,
+	        name: this.props.name + '_filename',
+	        value: this.state.value,
+	        className: this.props.className,
+	        onChange: function() {},
+	        placeholder: this.props.placeholder,
+	        disabled: this.props.disabled,
+	        style: this.state.styles.text
+	      }));
+	  }
+	});
+	
+	module.exports = FileInput;
+
+
+/***/ },
+/* 282 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var user = function user() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case "GET_PDF":
+	      return action.data;
+	    default:
+	      return state;
+	  }
+	};
+	
+	exports.default = user;
+
+/***/ },
+/* 283 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _jquery = __webpack_require__(268);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var getPdf = function getPdf(currentPdf) {
+	  return {
+	    type: "GET_PDF",
+	    data: currentPdf
+	  };
+	};
+	
+	var serverGetPdf = function serverGetPdf() {
+	  return function (dispatch) {
+	    _jquery2.default.ajax({
+	      url: '/api/upload/',
+	      type: 'GET'
+	    }).done(function (data) {
+	      dispatch(getPdf(data));
+	    });
+	    // returning a promise so .then can be called if needed
+	    return Promise.resolve();
+	  };
+	};
+	
+	var postPDF = function postPDF(data) {
+	  return function (dispatch) {
+	    // var formData = new FormData();
+	    // console.log(data.file)
+	    // formData.append('title', data.title);
+	    // formData.append('file', data.file, data.file.name);
+	    console.log(data);
+	    _jquery2.default.ajax({
+	      url: '/api/upload/',
+	      type: 'POST',
+	      cache: false,
+	      contentType: false,
+	      processData: false,
+	      data: data
+	    }).done(function (data) {
+	      dispatch(serverGetPdf(data));
+	    });
+	    // returning a promise so .then can be called if needed
+	    return Promise.resolve();
+	  };
+	};
+	
+	exports.default = {
+	  serverGetPdf: serverGetPdf,
+	  postPDF: postPDF
+	};
 
 /***/ }
 /******/ ]);

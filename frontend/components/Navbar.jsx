@@ -16,7 +16,7 @@ const Navbar = (props)=>{
         return (<li key="login"><Link to="/login">Login</Link></li>)
     }
   };
-  var links= ["About", "Classes", "Gallery", "Calendar", "Contact"]
+  var links= ["About", "Classes", "Gallery", "Calendar", "Contact" , "Forms"]
   links = links.map(function(element,index){
     return(<li key={index}><Link to={"/"+element.toLowerCase()}>{element}</Link></li>)
     })
